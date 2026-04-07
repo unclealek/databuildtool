@@ -8,4 +8,6 @@ select
     genre.id as genre_id,
     genre.name as genre_name
 from movies
-cross join inline(from_json(movies.genres, 'array<struct<id:int,name:string>>')) as genre
+lateral view explode(
+    from_json(movies.genres, 'array<struct<id:int,name:string>>')
+) exploded_genres as genre

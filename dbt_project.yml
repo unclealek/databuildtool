@@ -32,3 +32,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dbtDatabricks:
     +materialized: view
+seeds:
+  dbtDatabricks:
+    +batch_size: 10  # Try 500 first; if it still fails, drop to 100

@@ -14,9 +14,9 @@ select
     cast_member.name as person_name,
     cast_member.order as cast_order
 from credits
-cross join inline(
+lateral view explode(
     from_json(
         credits.cast,
         'array<struct<cast_id:int,character:string,credit_id:string,gender:int,id:int,name:string,order:int>>'
     )
-) as cast_member
+) exploded_cast as cast_member

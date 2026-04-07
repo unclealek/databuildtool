@@ -13,9 +13,9 @@ select
     crew_member.job,
     crew_member.name as person_name
 from credits
-cross join inline(
+lateral view explode(
     from_json(
         credits.crew,
         'array<struct<credit_id:string,department:string,gender:int,id:int,job:string,name:string>>'
     )
-) as crew_member
+) exploded_crew as crew_member

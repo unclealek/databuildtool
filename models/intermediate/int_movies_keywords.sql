@@ -8,4 +8,6 @@ select
     keyword.id as keyword_id,
     keyword.name as keyword_name
 from movies
-cross join inline(from_json(movies.keywords, 'array<struct<id:int,name:string>>')) as keyword
+lateral view explode(
+    from_json(movies.keywords, 'array<struct<id:int,name:string>>')
+) exploded_keywords as keyword

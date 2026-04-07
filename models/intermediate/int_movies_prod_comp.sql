@@ -8,6 +8,6 @@ select
     company.id as company_id,
     company.name as company_name
 from movies
-cross join inline(
+lateral view explode(
     from_json(movies.production_companies, 'array<struct<id:int,name:string>>')
-) as company
+) exploded_companies as company
