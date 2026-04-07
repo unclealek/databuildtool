@@ -1,0 +1,12 @@
+
+version: 2
+
+models:
+  - name: movies_model
+    description: "Staging model for movie metadata."
+    columns:
+      - name: id
+        description: "Unique identifier for the movie."
+        data_tests:
+          - unique
+          - not_null

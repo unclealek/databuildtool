@@ -1,0 +1,13 @@
+with movies as (
+    select *
+    from {{ ref('movies_model') }}
+)
+
+select
+    movies.id as movie_id,
+    company.id as company_id,
+    company.name as company_name
+from movies
+cross join inline(
+    from_json(movies.production_companies, 'array<struct<id:int,name:string>>')
+) as company
