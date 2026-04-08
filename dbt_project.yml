@@ -31,7 +31,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbtDatabricks:
-    +materialized: view
+    +materialized: table
+    +file_format: delta
 seeds:
   dbtDatabricks:
     +batch_size: 10  # Try 500 first; if it still fails, drop to 100

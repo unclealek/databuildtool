@@ -1,3 +1,5 @@
+{{ config(unique_key='movie_id', tags=['movies','intermediate','cast']) }}
+
 with credits as (
     select *
     from {{ ref('credits_model') }}

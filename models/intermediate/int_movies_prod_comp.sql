@@ -1,3 +1,5 @@
+{{ config(unique_key='movie_id', tags=['movies','intermediate','prod_comp']) }}
+
 with movies as (
     select *
     from {{ ref('movies_model') }}

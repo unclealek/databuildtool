@@ -1,4 +1,4 @@
-{{ config(materialized='incremental', unique_key='movie_id', file_format='delta', tags='') }}
+{{ config(materialized='incremental', unique_key='movie_id', tags=['credits','staging','incremental']) }}
 
 with source_data as (
     select *

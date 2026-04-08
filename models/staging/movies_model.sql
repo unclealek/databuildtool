@@ -1,4 +1,4 @@
-{{ config(materialized='table', file_format='delta') }}
+{{ config(unique_key='id', tags=['movies','staging']) }}
 
 with source_data as (
     select *
