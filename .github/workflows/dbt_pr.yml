@@ -1,0 +1,45 @@
+name: dbt PR Validation
+
+on:
+  pull_request:
+    branches:
+      - dbt
+
+# Ensure that only one run happens at a time per PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dbt_ci:
+    name: Run dbt CI
+    runs-on: ubuntu-latest
+
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      # Create a dynamic schema name using the pull request number!
+      DBT_SCHEMA: "ci_pr_${{ github.event.pull_request.number }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-databricks==1.7.*  # Adjust to your specific dbt-databricks version if needed
+
+      - name: dbt debug
+        run: dbt debug --profiles-dir .github --profile dbtDatabricks
+
+      - name: dbt deps
+        run: dbt deps --profiles-dir .github --profile dbtDatabricks
+
+      - name: dbt build
+        run: dbt build --profiles-dir .github --profile dbtDatabricks --target ci
