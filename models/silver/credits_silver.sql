@@ -2,11 +2,9 @@
 
 with source_data as (
     select *
-    from {{ ref('credits') }}
+    from {{ ref('credits_model') }}
 )
 
 select *
 from source_data
 where movie_id is not null
-
-
