@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install dbt-databricks==1.7.*  # Adjust to your specific dbt-databricks version if needed
+          pip install dbt-databricks==1.6.*  # Adjust to your specific dbt-databricks version if needed
 
       - name: dbt debug
         run: dbt debug --profiles-dir .github --profile dbtDatabricks
