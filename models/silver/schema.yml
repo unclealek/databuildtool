@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: credits_model
+    description: "Staging table for credits"
+    columns:
+      - name: movie_id
+        entity:
+          type: primary_key
+          name: movie_id
+        description: "Primary key for movie"
+        tests:
+          - unique
+          - not_null
+      - name: cast
+        description: "Cast of the movie"
+        tests:
+          - not_null
+      - name: crew
+        description: "Crew of the movie"
+        tests:
+          - not_null
+
+  - name: movies_model
+    description: "Staging table for movies"
+    columns:
+      - name: id
+        description: "Primary key for movie"
+        tests:
+          - unique
+          - not_null
+      - name: title
+        description: "Title of the movie"
+        tests:
+          - not_null
+      - name: genres
+        description: "Genres of the movie"
+        dimension:
+          type: categorical
+          label: "Genres"
+        tests:
+          - not_null
+      - name: keywords
+        description: "Keywords of the movie"
+        dimension:
+          type: categorical
+          label: "Keywords"
+        tests:
+          - not_null
+      - name: original_language
+        description: "Original language of the movie"
+        tests:
+          - not_null
+      - name: original_title
+        description: "Original title of the movie"
+        tests:
+          - not_null
+      - name: overview
+        description: "Overview of the movie"
+        tests:
+          - not_null
+      - name: popularity
+        description: "Popularity of the movie"
+        tests:
+          - not_null
+      - name: production_companies
+        description: "Production companies of the movie"
+        tests:
+          - not_null
+      - name: production_countries
+        description: "Production countries of the movie"
+        tests:
+          - not_null
+      - name: release_date
+        description: "Release date of the movie"
+        tests:
+          - not_null
+      - name: revenue
+        description: "Revenue of the movie"
+        tests:
+          - not_null
+      - name: runtime
+        description: "Runtime of the movie"
+        tests:
+          - not_null
+      - name: spoken_languages
+        description: "Spoken languages of the movie"
+        tests:
+          - not_null
+      - name: status
+        description: "Status of the movie"
+        tests:
+          - not_null
+      - name: tagline
+        description: "Tagline of the movie"
+        tests:
+          - not_null
+      - name: vote_average
+        description: "Vote average of the movie"
+        tests:
+          - not_null
+      - name: vote_count
+        description: "Vote count of the movie"
+        tests:
+          - not_null
