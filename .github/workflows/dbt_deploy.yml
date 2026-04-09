@@ -3,7 +3,7 @@ name: dbt Production Deployment
 on:
   push:
     branches:
-      - main
+      - dbt
 
 # Ensure that only one deployment happens at a time
 concurrency:
@@ -21,7 +21,7 @@ jobs:
       DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
       DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
       # This is the hardcoded schema name for your production data!
-      DBT_SCHEMA: "dbt_prod"
+      DBT_SCHEMA: "dbt"
 
     steps:
       - name: Checkout code

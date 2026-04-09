@@ -3,7 +3,7 @@ name: dbt PR Validation
 on:
   pull_request:
     branches:
-      - dbt
+      - update-schema
 
 # Ensure that only one run happens at a time per PR
 concurrency:
