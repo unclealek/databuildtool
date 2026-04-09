@@ -1,0 +1,43 @@
+name: dbt Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+# Ensure that only one deployment happens at a time
+concurrency:
+  group: dbt-production-deployment
+  cancel-in-progress: true
+
+jobs:
+  dbt_deploy:
+    name: Run dbt Deploy
+    runs-on: ubuntu-latest
+    environment: production
+    
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      # This is the hardcoded schema name for your production data!
+      DBT_SCHEMA: "dbt_prod"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-databricks==1.7.*
+          
+      - name: dbt deps
+        run: dbt deps --profiles-dir .github --profile dbtDatabricks
+
+      - name: dbt build to Production
+        run: dbt build --profiles-dir .github --profile dbtDatabricks --target ci
