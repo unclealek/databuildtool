@@ -14,8 +14,8 @@ jobs:
   dbt_deploy:
     name: Run dbt Deploy
     runs-on: ubuntu-latest
-    environment: production
-    
+
+
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
       DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install dbt-databricks==1.7.*
-          
+
       - name: dbt deps
         run: dbt deps --profiles-dir .github --profile dbtDatabricks
 
